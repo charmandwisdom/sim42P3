@@ -176,7 +176,7 @@ class CommandInterface(object):
         try:
             if self.createdRoot:
                 self.thermoAdmin.CheckThermoVersion()
-        except (SimError, CmdError), e:
+        except (SimError, CmdError) as e:
             self.root.InfoMessage(e.messageKey, e.extraData, MessageHandler.errorMessage)
             
         self.clipboard = Clipboard()
@@ -441,14 +441,14 @@ class CommandInterface(object):
                 
                 self.root.Solve()
                      
-        except (SimError, CmdError), e:
+        except (SimError, CmdError) as  e:
             self.root.InfoMessage(e.messageKey, e.extraData, MessageHandler.errorMessage)
-        except VMGerror, e:
+        except VMGerror as e:
             self.root.InfoMessage('CMDVMGError', (rawCmd, str(sys.exc_type), str(e)), MessageHandler.errorMessage)
-        except VMGwarning, e:
+        except VMGwarning as e:
             self.root.InfoMessage('CMDVMGWarning', (str(e),), MessageHandler.infoMessage)
     
-        except ConsistencyError, e:
+        except ConsistencyError as e:
             self.root.InfoMessage(str(e), None, MessageHandler.errorMessage)
 
         return retVal
@@ -521,9 +521,9 @@ class CommandInterface(object):
         try:
             self.root.InfoMessage ('CMDNotifyBeforeReadFile', inDesc)
             self.ProcessCommandStream(inFile, self.output)
-        except CallBackException, e:
+        except CallBackException as e:
             self.root.InfoMessage('CMDCallBackException', str(e))
-        except Exception, e:
+        except Exception as e:
             str_e = str(e)
             tb = ''
             for i in traceback.format_tb(sys.exc_traceback):
@@ -895,7 +895,7 @@ class CommandInterface(object):
                 z.close()
             
             
-        except CmdError, e:
+        except CmdError as e:
             sys.setrecursionlimit(rlimit)
             self.root.SetInfoCallBack(self.infoCallBack)
             if tempFile:
@@ -903,7 +903,7 @@ class CommandInterface(object):
                 except: pass
             sys.setrecursionlimit(rlimit)
             raise e
-        except StandardError, e:
+        except StandardError as e:
             sys.setrecursionlimit(rlimit)
             self.root.SetInfoCallBack(self.infoCallBack)
             self.root.InfoMessage ('CMDRecallError', (fromFile, str(e)))
@@ -1408,7 +1408,7 @@ class CommandInterface(object):
                 z.close()
             self.root.InfoMessage ('CMDFinishedRecall', fromFile)
  
-        except CmdError, e:
+        except CmdError as e:
             sys.setrecursionlimit(rlimit)
             self.CleanUp()
             #self.units = units.UnitSystem()
@@ -1422,7 +1422,7 @@ class CommandInterface(object):
                 try: os.remove(tempFile)
                 except: pass
             raise e
-        except Exception, e:
+        except Exception as e:
             self.CleanUp()
             #self.units = units.UnitSystem()
             self.EnsureUnitSystem()
@@ -2006,7 +2006,7 @@ class CommandInterface(object):
                     lhsObj.SetValue(rhsObj, calcStatus)
                     self.root.InfoMessage ('CMDNotifySetValue', (PathOf(lhsObj), str(rhsObj)))
                     return
-                except CmdError, e:
+                except CmdError as e:
                     raise e
                 except:
                     pass
@@ -2039,7 +2039,7 @@ class CommandInterface(object):
             try:
                 lhsObj.SetValue(rhsDesc, calcStatus)
                 self.root.InfoMessage ('CMDNotifySetValue', (PathOf(lhsObj), rhsDesc))
-            except SimError, e:
+            except SimError as e:
                 raise e
             except:
                 raise CmdError('CMDCouldNotAssign', rhsDesc)
@@ -3214,7 +3214,7 @@ def MakeDirs(newdir, mode=0777):
     #From Python cookbook
     #Creating Directories Including Necessary Parent Directories
     try: os.makedirs(newdir, mode)
-    except OSError, err:
+    except OSError as err:
         # Reraise the error unless it's about an already existing directory
         if err.errno != errno.EEXIST or not os.path.isdir(newdir):
             raise
@@ -3646,9 +3646,9 @@ def run(optimize=0):
         try:
             interface.ProcessCommandStream(sys.stdin, sys.stdout, sys.stdout)
             break
-        except CallBackException, e:
+        except CallBackException as e:
             interface.infoCallBack.handleMessage('CMDCallBackException', str(e))
-        except Exception, e:
+        except Exception as e:
             tb = ''
             for i in traceback.format_tb(sys.exc_traceback):
                 tb += i + '\n'
