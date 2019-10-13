@@ -726,27 +726,27 @@ if __name__ == '__main__':
         
     units = UnitSystem()
     for i in units.types.values():
-        print i.name, i.id
+        print (i.name, i.id)
 
     #print 'Units'
     #for unit in units.units.values():
     #    print unit.GetName(), unit.scale, unit.offset, unit.operation, unit.notes
     
     for i in units.GetSetNames():
-        print i
+        print (i)
     
     for unit in units.UnitsByType(9):
-        print unit.name, unit.scale, unit.notes
+        print( unit.name, unit.scale, unit.notes)
     
     for unit in units.UnitsByPartialName('k', 32):
-        print unit.name, unit.typeID, unit.scale, unit.notes
+        print( unit.name, unit.typeID, unit.scale, unit.notes)
         base = unit.ConvertToBase(1.0)
-        print base, unit.ConvertFromBase(base)
+        print( base, unit.ConvertFromBase(base))
     
-    print 'Type ID for MoleFlow', units.GetTypeID('MoleFlow')
+    print ('Type ID for MoleFlow', units.GetTypeID('MoleFlow'))
     typeID = units.GetTypeID('Temperature')
     fieldSet = units.GetUnitSet('Field')
-    print 'Field unit for Temperature', units.GetUnit(fieldSet, typeID).name
+    print ('Field unit for Temperature', units.GetUnit(fieldSet, typeID).name)
     pass
 
 

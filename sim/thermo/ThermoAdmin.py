@@ -10,7 +10,8 @@ providers.
 
 """
 
-import os, re
+import os, re, sys
+sys.path.append("..//..//")
 from UserDict import *
 from sim.solver.Variables import *
 from sim.solver.Error import SimError
@@ -383,7 +384,7 @@ class ThermoAdmin(object):
     def CustomCommand(self, provider, thCase, cmd):
         try:
             return self.thDict[provider].CustomCommand(thCase, cmd)
-        except SimError, e:
+        except SimError as e:
             return e.extraData
         except:
             raise SimError('ErrorValue', cmd + ' failed.') 
@@ -882,7 +883,7 @@ class ThermoProvider(object):
                 try:
                     self.thermoAdmin.AddCompound(self.provider, self.case, cmp)
                     response = response + cmp + ' '
-                except Exception, e:
+                except Exception as e:
                     self.thermoAdmin.InfoMessage('AddCompoundError', str(e))
         return response
 
@@ -895,7 +896,7 @@ class ThermoProvider(object):
             descTupple = GetCompoundPropertyLists(hypoName, hypoDesc, unitSystem)            
             self.thermoAdmin.AddHypoCompound(self.provider, self.case, hypoName, descTupple)
             return hypoName
-        except Exception, e:
+        except Exception as e:
             self.thermoAdmin.InfoMessage('AddHypoCompoundError', str(e))
             return None
 
@@ -1074,7 +1075,7 @@ class ThermoCase(object):
                 try:
                     self.thermoAdmin.AddCompound(self.provider, self.case, cmp)
                     response = response + cmp + ' '
-                except Exception, e:
+                except Exception as e:
                     self.thermoAdmin.InfoMessage('AddCompoundError', str(e))
         return response
 
@@ -1088,7 +1089,7 @@ class ThermoCase(object):
             descTupple = GetCompoundPropertyLists(hypoName, hypoDesc, unitSystem)            
             self.thermoAdmin.AddHypoCompound(self.provider, self.case, hypoName, descTupple)
             return hypoName
-        except Exception, e:
+        except Exception as e:
             self.thermoAdmin.InfoMessage('AddHypoCompoundError', str(e))
             return None
 
@@ -1097,7 +1098,7 @@ class ThermoCase(object):
             descTupple = GetCompoundPropertyLists(hypoName, hypoDesc, unitSystem)            
             self.thermoAdmin.EditCompound(self.provider, self.case, hypoName, descTupple)
             return hypoName
-        except Exception, e:
+        except Exception as e:
             self.thermoAdmin.InfoMessage('EditCompoundError', str(e))
             return None
         

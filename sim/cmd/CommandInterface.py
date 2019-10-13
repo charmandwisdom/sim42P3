@@ -5,15 +5,17 @@ try:
 except:
     pass
 
-import sys, os, re, string, cPickle, time, errno
-sys.path.append("/Users/jonathanxavier/Developer/sim42")
-import StringIO, types, copy, zipfile, tempfile
-pickle = cPickle
-#import pickle
+import sys, os, re, string, pickle, time, errno
+#sys.path.append("/Users/jonathanxavier/Developer/sim42")
+import types, copy, zipfile, tempfile
+from io import StringIO
+
 import gc    
 import numpy
 import traceback
+sys.path.append('..//..//')
 import sim.cmd.cmdlanguages
+
 
 from HelperClasses import VersionedOutputFile
 
@@ -3209,7 +3211,7 @@ def AppendFileNames(fileLst, dirName, fNames):
         if os.path.isfile(os.path.join(dirName, fName)):
             fileLst.append(os.path.join(dirName, fName))
         
-def MakeDirs(newdir, mode=0777):
+def MakeDirs(newdir, mode=0o700):
     """Silently force the existance of newdir. Do not raise error if newdir already exists"""
     #From Python cookbook
     #Creating Directories Including Necessary Parent Directories
@@ -3661,23 +3663,23 @@ def dump_garbage(  ):
     show us what the garbage is about
     """
     # Force collection
-    print "\nGARBAGE:"
+    print ("\nGARBAGE:")
     gc.collect(  )
 
-    print "\nGARBAGE OBJECTS:"
+    print ("\nGARBAGE OBJECTS:")
     for x in gc.garbage:
         s = str(x)
-        print type(x),
+        print (type(x),)
         if len(s) > 120: s = s[:117]+'...'
         try:
-            print ' Path:%s ' % x.GetPath()
+            print (' Path:%s ' % x.GetPath())
         except:
             try:
-                print ' Name:%s ' % x.name
+                print (' Name:%s ' % x.name)
             except:
-                print ' No Name'
+                print (' No Name')
                                 
-        print 'o="%s"' % s
+        print ('o="%s"' % s)
         #for y in  gc.get_referrers(x):
             #s = str(y)
             #if len(s) > 120: s = s[:117]+'...'
@@ -3739,7 +3741,7 @@ def SetUpCodeOptimization(optimize):
                 
                 
     except:
-        print 'failed to set up code optimization';
+        print ('failed to set up code optimization');
     
     
 
